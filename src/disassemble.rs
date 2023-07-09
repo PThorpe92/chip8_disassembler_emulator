@@ -1,7 +1,6 @@
 use std::path::Path;
 use std::fs::{File, OpenOptions};
 use std::io::{Read, Write, self};
-use std::u8;
 use hex::encode;
 use crate::asm::return_opcodes;
 
@@ -45,13 +44,14 @@ fn parse_rom_to_hex(file: &Path) -> io::Result<Box<File>> {
   let mut buffer = Vec::new();
     hex_file.read_to_end(&mut buffer)?;
     println!("{}", String::from_utf8_lossy(&buffer));
-    let _ = buffer.chunks(4).map(|byte| {
-        let opcode = byte.iter().map(|chunk| return_opcodes(*chunk as u8)).collect::<String>();
-        match new_file.write(format!("{}\n", opcode).as_bytes()) {
-            Ok(_) => (),
-            Err(e) => println!("Error writing to file: {}", e),
+        for byte in buffer {
+            print!("{:x}", byte);
+            let opcode = return_opcodes(byte);
+            match new_file.write(format!("{}\n", opcode).as_bytes()) {
+                Ok(_) => (),
+                Err(e) => println!("Error writing to file: {}", e),
+            }
         }
-    });
     Ok(())
     } else {
         let mut hex_file = OpenOptions::new()
@@ -68,8 +68,6 @@ fn parse_rom_to_hex(file: &Path) -> io::Result<Box<File>> {
                 Err(e) => println!("Error writing to file: {}", e),
             }
         }
-        
-     
     Ok(())
     }
 }
