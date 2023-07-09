@@ -1,2 +1,13 @@
-# chip8_disassembler_emulator
-Currently disassembles Intel8080 (Chip8) ROM's into either Hex or Assembly. Soon will emulate completely. WIP
+Overview
+
+The Chip8 is a programming language and virtual machine created in the 1970s for early microcomputers. It was originally designed to allow easy game development. This project provides YET ANOTHER IMPLEMENTATION of a disassembler and soon to be emulator for Chip8 programs, targeting Intel 8080-based systems.
+
+The disassembler takes a Chip8 ROM file (.ch8) as input and converts the binary instructions into either a hexadecimal file or a file with the assembly language/opcodes. The hexadecimal file can be useful for further analysis or debugging, while the assembly language file provides a human-readable representation of the ROM's instructions. 
+https://altairclone.com/downloads/manuals/8080%20Programmers%20Manual.pdf</link>
+
+The emulator allows you to load and execute Chip8 games by emulating the behavior of an Intel 8080 processor. It provides an interactive environment where you can play games using the keyboard as input and see the game output on the screen.\
+
+#Usage
+
+    ./chip8_dissasembler -i ./testroms/Space\ Invaders\ \[David\ Winter\].ch8 -f "bin"    ||
+    ./chip8_disassembler -i rom.hex -f "hex"
