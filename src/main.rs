@@ -50,4 +50,27 @@ fn main() {
             println!("Invalid file type");
         },
     }
+    let emulatormatches = Command::new("emulator")
+                          .version("0.1.0")
+                          .author("PThorpe92")
+                          .about("Emulates and runs a CHIP-8 ROM")
+                          .arg(
+                           Arg::new("input_rom")
+                                  .long("input")
+                                  .short('i')
+                                  .help("Sets the input file ROM to emulate")
+                                  .required(true)
+                          ).get_matches();
+       let emulatorfile: String = emulatormatches.get_one::<String>("input").unwrap().to_owned();
+         let emu_path = PathBuf::from(emulatorfile.as_str());
+            match parse_rom(&emulatorpath, false) {
+                    Ok(_) => {
+                    run_emulator(emu_path);
+                    println!("Successfully emulated ROM");
+                    },
+                    Err(e) => {
+                        println!("Error: {}", e);
+                    },
+                }
+    
 }
